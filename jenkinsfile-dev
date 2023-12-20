@@ -2,17 +2,32 @@ pipeline {
     agent any
     
     stages {
+        stage('git') {
+            steps {
+                git branch: 'dev',
+                url: 'https://github.com/S-SUBHAA/miniproject.git'
+            }
+        }
+        
         stage ('building image') {
             steps {
                 script {
-                    sh 'chmod 777 build.sh'
+                    sh 'chmod 744 build.sh'
                     sh './build.sh'
-                    sh 'chmod 777 deploy.sh'
-                    sh './deploy.sh'       
+                    sh 'chmod 744 build.sh'
+                    sh '.deploy.sh'
+                    
                 }
             }
-        }   
+        }
+        stage ('push the repo:dev') {
+            steps {
+                sh 'docker tag node -t $DOCKER_USERNAME/dev:node'
+                sh 'docker push subhaaseeni/dev:node'
+            }
+            
+        }    
     }
 }
 
-
+}
