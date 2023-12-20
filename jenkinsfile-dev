@@ -2,21 +2,30 @@ peline {
     agent any
     
     stages {
-        stage('building images and deploy') {
+        
+        stage('Building images and deploy') {
             steps {
                 script {
                     sh 'chmod 774 build.sh'
                     sh './build.sh'
                     sh 'chmod 774 deploy.sh'
                     sh './deploy.sh'
-                    }
+                }
             }
         }
         
-        stage('pushing to dockerhub repo:react-dev') {
+        stage('Pushing to DockerHub repo:react-dev') {
             steps {
-                sh 'docker tag node -t $DOCKER_USERNAME/react-dev:node'
-                sh 'docker push subhaaseeni/dev:node'
+                script {
+                    // Tagging the Docker image
+                    sh "docker tag node $DOCKER_USERNAME/react-dev:node"
+                    
+                    // Logging in to DockerHub (you may need to handle DockerHub credentials)
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    
+                    // Pushing the Docker image
+                    sh "docker push $DOCKER_USERNAME/react-dev:node"
+                }
             }
         }
     }
