@@ -1,33 +1,19 @@
-peline {
+pipeline {
     agent any
     
     stages {
-        
-        stage('Building images and deploy') {
+        stage ('building image') {
             steps {
                 script {
-                    sh 'chmod 774 build.sh'
+                    sh 'chmod 777 build.sh'
                     sh './build.sh'
-                    sh 'chmod 774 deploy.sh'
-                    sh './deploy.sh'
+                    sh 'chmod 777 build.sh'
+                    sh './deploy.sh'       
                 }
             }
         }
         
-        stage('Pushing to DockerHub repo:react-dev') {
-            steps {
-                script {
-                    // Tagging the Docker image
-                    sh "docker tag node $DOCKER_USERNAME/react-dev:node"
-                    
-                    // Logging in to DockerHub (you may need to handle DockerHub credentials)
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    
-                    // Pushing the Docker image
-                    sh "docker push $DOCKER_USERNAME/react-dev:node"
-                }
-            }
-        }
     }
 }
+
 
