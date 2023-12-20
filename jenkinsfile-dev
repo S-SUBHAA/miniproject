@@ -12,10 +12,10 @@ pipeline {
         stage ('building image') {
             steps {
                 script {
-                    sh 'chmod 744 build.sh'
+                    sh 'chmod +x build.sh'
                     sh './build.sh'
-                    sh 'chmod 744 build.sh'
-                    sh '.deploy.sh'
+                    sh 'chmod +x deploy.sh'
+                    sh './deploy.sh'
                     
                 }
             }
