@@ -1,0 +1,32 @@
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('git') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/S-SUBHAA/miniproject.git'
+            }
+        }
+        
+        stage ('building image') {
+            steps {
+                script {
+                    sh 'chmod +x build.sh'
+                    sh './build.sh'
+                    sh 'chmod +x deploy.sh'
+                    sh './deploy.sh'
+                    
+                }
+            }
+        }
+        stage ('push the repo:prod') {
+            steps {
+                sh 'docker tag node $DOCKER_USERNAME/prod:node'
+                sh 'docker push subhaaseeni/prod:node'
+            }
+            
+        }    
+    }
+}
