@@ -1,0 +1,24 @@
+peline {
+    agent any
+    
+    stages {
+        stage('building images and deploy') {
+            steps {
+                script {
+                    sh 'chmod 774 build.sh'
+                    sh './build.sh'
+                    sh 'chmod 774 deploy.sh'
+                    sh './deploy.sh'
+                    }
+            }
+        }
+        
+        stage('pushing to dockerhub repo:react-dev') {
+            steps {
+                sh 'docker tag node -t $DOCKER_USERNAME/react-dev:node'
+                sh 'docker push subhaaseeni/dev:node'
+            }
+        }
+    }
+}
+
