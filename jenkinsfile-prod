@@ -23,8 +23,8 @@ pipeline {
         }
         stage ('push the repo:prod') {
             steps {
-                sh 'docker tag node $DOCKER_USERNAME/prod:node'
-                sh 'docker push subhaaseeni/prod:node'
+                sh 'docker tag node subhaaseeni/prod'
+                sh 'docker push subhaaseeni/prod'
             }
             
         }    
