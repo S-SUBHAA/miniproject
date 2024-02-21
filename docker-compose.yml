@@ -2,6 +2,6 @@ version: '3'
 services:
   web:
     image: node:latest
-    container_name: mycontainer
+    container_name: 
     ports:
       - "80:80"
