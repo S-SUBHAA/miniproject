@@ -22,8 +22,8 @@ pipeline {
         }
         stage ('push the repo:dev') {
             steps {
-                sh 'docker tag node $DOCKER_USERNAME/dev:node'
-                sh 'docker push subhaaseeni/dev:node'
+                sh 'docker tag node $DOCKER_USERNAME/dev'
+                sh 'docker push subhaaseeni/dev'
             }
             
         }    
